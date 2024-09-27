@@ -20,7 +20,7 @@ resource "aws_route_table_association" "pub_sub_1" {
 
 resource "aws_route_table_association" "pub_sub_2" {
   subnet_id      = aws_subnet.staging_pub_2.id
-  route_table_id = aws_route_table.Pub_rtr .id
+  route_table_id = aws_route_table.Pub_rtr.id
 }
 
 ############# Private Routable ################
