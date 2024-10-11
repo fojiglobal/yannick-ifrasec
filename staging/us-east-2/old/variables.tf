@@ -52,6 +52,11 @@ variable "alb_protocol_https" {
     default = "HTTPS"
 }
 
+variable "drop_invalid_header" {
+  type = bool
+  default = true
+}
+
 ########## SSL Profile ##########
 variable "alb_ssl_profile" {
     type = string
