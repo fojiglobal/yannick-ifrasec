@@ -57,5 +57,3 @@ variable "alb_ssl_profile" {
     type = string
     default = "ELBSecurityPolicy-2016-08"
 }
-
-
