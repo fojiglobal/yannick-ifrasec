@@ -124,46 +124,40 @@ variable "bastion_sg_egress" {
   }))
 }
 
+################# and TGW Variables ##########################
 variable "http_port" {
-  type = number
+  type = string
+  default = "80"
 }
 
 variable "https_port" {
-  type = number
-}
-
-variable "http_protocol" {
   type = string
+  default = "443"
 }
 
-variable "https_protocol" {
+variable "https_proto" {
   type = string
+  default = "HTTPS"
 }
 
-variable "internet_facing" {
-  type = bool
-}
-
-variable "lb_type" {
+variable "http_proto" {
   type = string
+  default = "HTTP"
+}
+variable "alb_rule_condition" {
+  type = list(string)
 }
 
 variable "alb_ssl_profile" {
   type = string
 }
-
-variable "my_domain_env" {
+variable "alb_ssl_cert_arn" {
   type = string
 }
 
-variable "route53_target_health" {
-  type = bool
-}
-
-variable "record_type_A" {
+variable "dns_name" {
   type = string
 }
-
-variable "my_domain_name" {
+variable "dns_zone" {
   type = string
 }
