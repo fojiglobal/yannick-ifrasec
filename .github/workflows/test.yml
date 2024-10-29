@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     ## Only Run TF Plan when a PR is opened
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
