@@ -30,7 +30,30 @@ jobs:
         run: echo "Welcome to my GHA Terraform Test"
 
       # Runn a single command using the runners shell
-      - name: Run a one-line 
+      - name: Display Date and Time
         run:  |
           date
           cat /etc/os-release
+
+  deploy:
+    ## Only Run TF Plan when a PR is opened
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+        - name: Deploy Terraform
+          run: echo "Terraform Apply"
+
+    # # Steps represent a sequence of tasks that will be executed as part of the job
+    # steps:
+    #   # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    #   - uses: actions/checkout@v4
+
+    #   # Runn a single command using the runners shell
+    #   - name: GHA Terraform
+    #     run: echo "Welcome to my GHA Terraform Test"
+
+    #   # Runn a single command using the runners shell
+    #   - name: Display Date and Time 
+    #     run:  |
+    #       date
+    #       cat /etc/os-release 
