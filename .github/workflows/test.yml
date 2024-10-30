@@ -17,6 +17,11 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   tfplan:
+    defaults:
+      run:
+        shell: bash
+        working-directory: "./qa/us-east-2"
+
     ## Only Run TF Plan when a PR is opened
     runs-on: ubuntu-latest
 
