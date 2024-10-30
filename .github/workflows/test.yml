@@ -54,7 +54,7 @@ jobs:
 
   tfapply:
     ## Only Run TF Plan when a PR is opened
-    needs: build
+    needs: tfplan
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
