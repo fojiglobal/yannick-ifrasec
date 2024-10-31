@@ -108,7 +108,6 @@ jobs:
                 body: output
               })
             }
-      
   tfapply:
     ## Only Run tfapply only when tfplan is completed
     if : github.event_name == 'push'
