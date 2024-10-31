@@ -20,7 +20,7 @@ env:
 jobs:
   tfplan:
     ## Only run TF Plan when a PR is opened
-    if : github.event_name == 'pull request'
+    if : github.event_name == 'pull_request'
     defaults:
       run:
         shell: bash
