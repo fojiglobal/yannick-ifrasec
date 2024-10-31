@@ -110,7 +110,7 @@ jobs:
             }
   tfapply:
     ## Only Run tfapply only when tfplan is completed
-    if : github.event_name == 'push'
+    if: github.event_name == 'push'
     needs: tfplan
     runs-on: ubuntu-latest
     steps:
