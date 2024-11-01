@@ -110,7 +110,7 @@ jobs:
             }
   terraform-snyk-scan:
     ## this job will run after the TF Plan to scan before TF Apply
-    needs: tfplan
+     needs: tfplan
      runs-on: ubuntu-latest
      steps:
         - uses: actions/checkout@v2
