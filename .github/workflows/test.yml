@@ -120,7 +120,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}}
 
   tfapply:
-    ## Only Run tfapply only when tfplan is completed
+    ## Only Run tfapply only when tfplan is completed##
     if: github.event_name == 'push'
     needs: terraform-snyk-scan
     runs-on: ubuntu-latest
