@@ -117,7 +117,6 @@ jobs:
       - name: Scan Terraform Code for Security misconfigurations. Resolve All Critical and High before Merge to Main
         uses: snyk/actions/iac@master
         env:
-          JAVASCRIPT_ACTIONS: FORCE_JAVASCRIPT_ACTIONS_TO_NODE20=true
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}}
 
   tfapply:
