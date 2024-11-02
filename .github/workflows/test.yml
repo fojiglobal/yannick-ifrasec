@@ -119,6 +119,8 @@ jobs:
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: "./qa/us-east-2"  
 
   tfapply:
     ## Only Run tfapply only when tfplan is completed
