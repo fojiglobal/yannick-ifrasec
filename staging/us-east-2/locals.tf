@@ -67,61 +67,61 @@ locals {
 ############## Locals Public SG #################################
 
 locals {
-    public-sg-ingress = {
+  public-sg-ingress = {
     "all-http" = {
-      src = "0.0.0.0/0"
-      from_port = 80
-      to_port = 80
+      src         = "0.0.0.0/0"
+      from_port   = 80
+      to_port     = 80
       ip_protocol = "tcp"
       description = "Allow HTTP From Anywhere"
     }
-     "all-https" = {
-      src = "0.0.0.0/0"
-      from_port = 443
-      to_port = 443
+    "all-https" = {
+      src         = "0.0.0.0/0"
+      from_port   = 443
+      to_port     = 443
       ip_protocol = "tcp"
       description = "Allow HTTP From Anywhere"
     }
   }
-    public-sg-egress = {
-  "all-http" = {
-    dest = "0.0.0.0/0"
-    ip_protocol = "-1"
-    description = "Allow All To Anywhere"
+  public-sg-egress = {
+    "all-http" = {
+      dest        = "0.0.0.0/0"
+      ip_protocol = "-1"
+      description = "Allow All To Anywhere"
+    }
   }
-}
 
 }
 
 ####################### Locals Private SG ######################
 
 locals {
-   private-sg-egress = {
-  "all" = {
-    dest = "0.0.0.0/0"
-    ip_protocol = "-1"
-    description = "Allow All To Anywhere"
+  private-sg-egress = {
+    "all" = {
+      dest        = "0.0.0.0/0"
+      ip_protocol = "-1"
+      description = "Allow All To Anywhere"
+    }
   }
-}
   private-sg-ingress = {
     "alb-http" = {
-      src = module.staging.public_sg_id
-      from_port = 80
-      to_port = 80
+      src         = module.staging.public_sg_id
+      from_port   = 80
+      to_port     = 80
       ip_protocol = "tcp"
       description = "Allow HTTP From Anywhere"
     }
-     "alb-https" = {
-      src = module.staging.public_sg_id
-      from_port = 443
-      to_port = 443
+    "alb-https" = {
+      src         = module.staging.public_sg_id
+      from_port   = 443
+      to_port     = 443
       ip_protocol = "tcp"
       description = "Allow HTTP From Anywhere"
     }
     "bastion-ssh" = {
-      src = module.staging.bastion_sg_id
-      from_port = 22
-      to_port = 22
+      src         = module.staging.bastion_sg_id
+      from_port   = 22
+      to_port     = 22
       ip_protocol = "tcp"
       description = "Allow SSH from Bastion"
     }
@@ -132,18 +132,18 @@ locals {
 ################### Bastion SG Rules ###############
 
 locals {
-   bastion-sg-egress = {
-  "all" = {
-    dest = "0.0.0.0/0"
-    ip_protocol = "-1"
-    description = "Allow All To Anywhere"
+  bastion-sg-egress = {
+    "all" = {
+      dest        = "0.0.0.0/0"
+      ip_protocol = "-1"
+      description = "Allow All To Anywhere"
+    }
   }
-}
   bastion-sg-ingress = {
     "all-ssh" = {
-      src = "0.0.0.0/0"
-      from_port = 22
-      to_port = 22
+      src         = "0.0.0.0/0"
+      from_port   = 22
+      to_port     = 22
       ip_protocol = "tcp"
       description = "Allow SSH From Anywhere"
     }
@@ -152,9 +152,9 @@ locals {
 
 ############## Target group #############
 locals {
-  http-port = 80
-  https-port = 443
-  http-protocol = "http"
+  http-port      = 80
+  https-port     = 443
+  http-protocol  = "http"
   https-protocol = "https"
 }
 
