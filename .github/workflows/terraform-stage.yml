@@ -128,11 +128,13 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - uses: hashicorp/setup-terraform@v3
+
         - name: Terraform Init
           id: init
           run: terraform init
+
         - name: Deploy Terraform
-        - name: terraform apply --auto-approve
+          run: terraform apply --auto-approve
   tfdestroy:
     if: always() && github.event_name == 'workflow_dispatch:'
     needs: tfapply
@@ -140,9 +142,11 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - uses: hashicorp/setup-terraform@v3
+
         - name: Terraform Init
           id: init
           run: terraform init
+          
         - name: Destroy Terraform
-        - name: terraform destroy --auto-approve
+          run: terraform destroy --auto-approve
     
