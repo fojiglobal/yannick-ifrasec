@@ -16,17 +16,15 @@ permissions: write-all
 env:
     AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
     AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-
+defaults:
+  run:
+    shell: bash
+    working-directory: "./staging/us-east-2"
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   tfplan:
     ## Only run TF Plan when a PR is opened
-    if : github.event_name == 'pull_request'
-    defaults:
-      run:
-        shell: bash
-        working-directory: "./qa/us-east-2"
-
+    if: github.event_name == 'pull_request'
     ## Only Run TF Plan when a PR is opened
     runs-on: ubuntu-latest
 
@@ -35,7 +33,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform fmt
         id: fmt
@@ -109,40 +107,46 @@ jobs:
                 body: output
               })
             }
-  terraform-snyk-pre-scan:
+  terraform-snyk-scan:
     if: github.event_name == 'pull_request'
     needs: tfplan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - name: Scan Terraform Code for Security misconfigurations. Resolve All Critical and High before Merge to Main
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          file: "./qa/us-east-2"
+          file: "./staging/us-east-2"
           args: --severity-threshold=high
-
-  terraform-snyk-post-scan:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Scan Terraform Code for Security misconfigurations. Resolve All Critical and High before Merge to Main
-        uses: snyk/actions/iac@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          file: "./qa/us-east-2"
-          args: --severity-threshold=high        
 
   tfapply:
     if: always() && github.event_name == 'push'
-    needs: terraform-snyk-post-scan
+    needs: terraform-snyk-scan
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
-        - name: Deploy Terraform
-          run: echo "Terraform Apply"
+        - uses: hashicorp/setup-terraform@v3
 
+        - name: Terraform Init
+          id: init
+          run: terraform init
+
+        - name: Deploy Terraform
+          run: terraform apply --auto-approve
+  tfdestroy:
+    if: always() && github.event_name == 'workflow_dispatch:'
+    needs: tfapply
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+        - uses: hashicorp/setup-terraform@v3
+
+        - name: Terraform Init
+          id: init
+          run: terraform init
+
+        - name: Destroy Terraform
+          run: terraform destroy --auto-approve
     
