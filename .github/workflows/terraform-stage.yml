@@ -135,6 +135,7 @@ jobs:
 
         - name: Deploy Terraform
           run: terraform apply --auto-approve
+  # this is to destroy all infrastroctur         
   tfdestroy:
     if: always() && github.event_name == 'workflow_dispatch'
     needs: tfapply
