@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket         = "yannick-cs2-terraformm"
-    key            = "staging/terraform.tfstate"
+    key            = "aws-org/terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "cs2-infrasec-terraform"
   }
